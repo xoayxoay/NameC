@@ -1,0 +1,68 @@
+script.
+  if (typeof module === 'object') {window.module = module; module = undefined;}
+// normal script imports etc
+script(src='scripts/plugins/jquery.min.js')
+script(src='scripts/plugins/bootstrap.min.js')
+script(src="scripts/plugins/bootstrap-notify.min.js")
+script(src="scripts/plugins/sweetalert.min.js")
+// Insert this line after script imports
+script.
+  if (window.module) module = window.module;
+
+script(type='text/javascript').
+    const { request, helpers } = window;
+
+    const changeButton = (path, isWait) =>
+      new Promise(async (resolve, reject) => {
+      try {
+          $(path).attr('data-is-wait', isWait ? '1' : '0').css({
+              cursor: isWait ? 'wait' : 'default',
+              opacity: isWait ? 0.6 : 1,
+          });
+          isRun = isWait ? 1 : 0;
+          resolve(true);
+      } catch (error) {
+          reject(error);
+      }
+    });
+    const onAddNameServer = async (e) => {
+      if ($(e).attr('data-is-wait') === '0') {
+        try {
+          await changeButton(e, 1);
+          $("#results").html('');
+          const cloudFlareApiKey = $("#cloudFlareApiKey").val();
+          const nameCheapUsername = $("#nameCheapUsername").val();
+          const nameCheapApiKey = $("#nameCheapApiKey").val();
+          const response = await request({
+            url: 'https://api.cloudflare.com/client/v4/zones',
+            method: 'GET',
+            token: cloudFlareApiKey,
+          });
+          for(let i = 0; i < response?.result?.length; i +=1){
+            const domainSplit = response?.result[i]?.name.split('.');
+            const response2 = await request({
+              params: {
+                  ApiUser: nameCheapUsername,
+                  UserName: nameCheapUsername,
+                  ApiKey: nameCheapApiKey,
+                  Command: 'namecheap.domains.dns.setCustom',
+                  ClientIp: '192.168.1.109',
+                  SLD: domainSplit[0],
+                  TLD: domainSplit[1],
+                  NameServers: `${response?.result[i]?.name_servers[0]},${response?.result[i]?.name_servers[1]}`,
+              },
+              method: 'GET',
+              url: 'https://api.namecheap.com/xml.response',
+            });
+            $("#results").prepend(`<li>${response?.result[i]?.name} - ${response2?.indexOf('Error Number') > -1 ? response2 : 'Success'}</li>`);
+          }
+          
+          await changeButton(e, 0);
+        } catch (error) {
+          await changeButton(e, 0);
+        }
+      }
+    };
+
+
+

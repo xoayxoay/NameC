@@ -1,0 +1,33 @@
+doctype html
+- let id = '';
+- let tabs = [];
+- const rootDomains = ['viewtik.com', 'viewfb.com'];
+html(lang="en")
+  head
+    title NameCheap
+    meta(charset='utf-8')
+    meta(http-equiv='X-UA-Compatible', content='IE=edge')
+    meta(name='viewport', content='width=device-width, initial-scale=1')
+    meta(http-equiv='Content-Security-Policy' content="script-src 'self' 'unsafe-inline';")
+    link(rel='stylesheet', type='text/css', href='https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css')
+    link(rel='stylesheet' href='css/bootstrap.min.css')
+    link(rel='stylesheet' href='css/main.css')
+    link(rel='stylesheet' href='css/json-viewer.css')
+  body.px-10
+    .row.mt-10
+      .col-md-12
+        .form-group.mb-2
+          label(for='cloudFlareApiKey') Cloud Flare Api Key:
+          input.form-control#cloudFlareApiKey(name='cloudFlareApiKey')
+        .form-group.mb-2
+          label(for='nameCheapUsername') Name Cheap Username:
+          input.form-control#nameCheapUsername(name='nameCheapUsername')
+        .form-group.mb-2
+          label(for='nameCheapApiKey') Name Cheap Api Key:
+          input.form-control#nameCheapApiKey(name='nameCheapApiKey')
+        .form-group.mb-2
+          button.btn.btn-success(data-is-wait="0" onclick="onAddNameServer(this)" type="button") Run
+        ul#results
+    include scripts/init.pug
+    include scripts/notification.pug
+

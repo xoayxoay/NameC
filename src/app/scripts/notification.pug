@@ -1,0 +1,28 @@
+script(type='text/javascript').
+    const notification = (title, message) => {
+        let icon = '';
+        let type = '';
+        switch(title){
+            case 'error': 
+                icon = 'fa fa-exclamation';
+                type = 'danger';
+                break;
+            case 'info': 
+                icon = 'fa fa-exclamation';
+                type = 'info';
+                break;
+            case 'success': 
+                icon = 'fa fa-check';
+                type = 'success';
+                break;
+            default:
+                break;
+        }
+        $.notify({
+            title: `${capitalizeFirstLetter(title)}: `,
+            message,
+            icon,
+        },{
+            type
+        });
+    }

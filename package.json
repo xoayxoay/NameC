@@ -1,0 +1,62 @@
+{
+  "name": "NameCheap",
+  "version": "1.0.0",
+  "description": "NameCheap",
+  "main": "index.js",
+  "scripts": {
+    "start": "electron .",
+    "dist": "electron-builder",
+    "dist-all": "electron-builder -mw",
+    "pack": "electron-builder --dir"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "electron": "^19.0.0",
+    "electron-builder": "^23.0.3",
+    "eslint": "^8.16.0",
+    "eslint-config-airbnb": "^18.2.1",
+    "eslint-config-prettier": "^7.2.0",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-jsx-a11y": "^6.4.1",
+    "eslint-plugin-prettier": "^3.3.1",
+    "prettier": "^2.2.1"
+  },
+  "dependencies": {
+    "@faker-js/faker": "^7.3.0",
+    "axios": "^0.27.2",
+    "electron-is-dev": "^2.0.0",
+    "electron-pug": "^2.0.0",
+    "fs": "^0.0.1-security",
+    "http": "^0.0.1-security",
+    "https": "^1.0.0",
+    "minimist": "^1.2.6",
+    "node-fetch": "2",
+    "path": "^0.12.7",
+    "qs": "^6.10.5",
+    "request": "^2.88.2"
+  },
+  "build": {
+    "appId": "com.aff",
+    "productName": "ToolGmc",
+    "directories": {
+      "buildResources": "build"
+    },
+    "files": [
+      "./src/**/*",
+      "./index.js"
+    ],
+    "mac": {
+      "category": "public.app-category.utilities",
+      "target": [
+        "dmg"
+      ]
+    },
+    "win": {
+      "target": [
+        "nsis"
+      ]
+    }
+  }
+}
